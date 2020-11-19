@@ -7,8 +7,10 @@ import { colors } from './utils/index';
 import UnitsPicker from './components/UnitsPicker';
 import WeatherInfo from './components/WeatherInfo';
 import RefreshIcon from './components/RefreshIcon';
+import WeatherDetails from './components/WeatherDetails';
 
-const WEATHER_API_KEY = '02026f5ad728cd8e47d74c0f9518d4f9';
+import { WEATHER_API_KEY } from 'react-native-dotenv';
+
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?';
 
 export default function App() {
@@ -25,16 +27,16 @@ export default function App() {
         setErrorMessage(null);
         try {
             /** ===== This url for test in Android device ===== **/
-            const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=30.0778&lon=31.2852&units=${unitSystem}&appid=02026f5ad728cd8e47d74c0f9518d4f9`;
+            // const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=30.0778&lon=31.2852&units=${unitSystem}&appid=02026f5ad728cd8e47d74c0f9518d4f9`;
 
-            // let { status } = await Location.requestPermissionsAsync();
-            // if (status !== 'granted') {
-            //     setErrorMessage('Access to location is needed to run the app');
-            //     return;
-            // }
-            // let location = await Location.getCurrentPositionAsync();
-            // const { latitude, longitude } = location.coords;
-            // const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitSystem}&appid=${WEATHER_API_KEY}`;
+            let { status } = await Location.requestPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMessage('Access to location is needed to run the app');
+                return;
+            }
+            let location = await Location.getCurrentPositionAsync();
+            const { latitude, longitude } = location.coords;
+            const weatherUrl = `${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&units=${unitSystem}&appid=${WEATHER_API_KEY}`;
 
             const res = await fetch(weatherUrl);
             const result = await res.json();
@@ -54,10 +56,11 @@ export default function App() {
             <View style={styles.screen}>
                 <StatusBar style='auto' />
                 <View style={styles.main}>
-                    <UnitsPicker unitsSystem={unitSystem} setUnitsSystem={setUnitSystem} />
+                    <UnitsPicker unitSystem={unitSystem} setunitSystem={setUnitSystem} />
                     <RefreshIcon onRefresh={load} />
                     <WeatherInfo currentWeather={currentWeather} />
                 </View>
+                <WeatherDetails currentWeather={currentWeather} unitSystem={unitSystem} />
             </View>
         );
     } else if (errorMessage) {

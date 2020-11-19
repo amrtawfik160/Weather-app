@@ -2,12 +2,12 @@ import React from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 
-export default function UnitsPicker({ unitsSystem, setUnitsSystem }) {
+export default function UnitsPicker({ unitSystem, setunitSystem }) {
     return (
-        <View style={styles.unitsSystem}>
+        <View style={styles.unitSystem}>
             <Picker
-                selectedValue={unitsSystem}
-                onValueChange={item => setUnitsSystem(item)}
+                selectedValue={unitSystem}
+                onValueChange={item => setunitSystem(item)}
                 mode='dropdown'
             >
                 <Picker.Item label='C°' value='metric' />
@@ -17,7 +17,7 @@ export default function UnitsPicker({ unitsSystem, setUnitsSystem }) {
     );
 }
 const styles = StyleSheet.create({
-    unitsSystem: {
+    unitSystem: {
         position: 'absolute',
         ...Platform.select({
             ios: {
