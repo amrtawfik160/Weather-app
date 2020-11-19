@@ -1,5 +1,5 @@
 export const colors = {
-    PRIMARY_COLOR: '#ff304f',
-    SECONDARY_COLOR: '#002651',
-    BORDER_COLOR: '#dbdbdb',
+    primary: '#ff304f',
+    secondary: '#002651',
+    border: '#dbdbdb',
 };

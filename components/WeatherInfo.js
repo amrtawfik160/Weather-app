@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { colors } from '../utils/index';
 
-const { PRIMARY_COLOR, SECONDARY_COLOR } = colors;
+const { primary, SECONDARY_COLOR } = colors;
 
 export default function WeatherInfo({ currentWeather }) {
     const {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     },
     textPrimary: {
         fontSize: 40,
-        color: PRIMARY_COLOR,
+        color: primary,
     },
     texSecondary: {
         fontSize: 20,
