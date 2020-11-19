@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import * as Location from 'expo-location';
-import Constants from 'expo-constants';
+import { colors } from './utils/index';
 
+import UnitsPicker from './components/UnitsPicker';
 import WeatherInfo from './components/WeatherInfo';
 
 const WEATHER_API_KEY = '02026f5ad728cd8e47d74c0f9518d4f9';
@@ -16,9 +17,11 @@ export default function App() {
 
     useEffect(() => {
         (async () => {
+            setCurrentWeather(null);
+            setErrorMessage(null);
             try {
                 /** ===== This url for test in Android device ===== **/
-                const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=30.0778&lon=31.2852&units=metric&appid=02026f5ad728cd8e47d74c0f9518d4f9`;
+                const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=30.0778&lon=31.2852&units=${unitSystem}&appid=02026f5ad728cd8e47d74c0f9518d4f9`;
 
                 // let { status } = await Location.requestPermissionsAsync();
                 // if (status !== 'granted') {
@@ -41,23 +44,31 @@ export default function App() {
                 setErrorMessage(error.message);
             }
         })();
-    }, []);
+    }, [unitSystem]);
 
     if (currentWeather) {
         return (
             <View style={styles.screen}>
                 <StatusBar style='auto' />
                 <View style={styles.main}>
+                    <UnitsPicker unitsSystem={unitSystem} setUnitsSystem={setUnitSystem} />
                     <WeatherInfo currentWeather={currentWeather} />
                 </View>
             </View>
         );
-    } else {
+    } else if (errorMessage) {
         // Return if there is a error
         return (
             <View style={styles.screen}>
                 <StatusBar style='auto' />
                 <Text>{errorMessage}</Text>
+            </View>
+        );
+    } else {
+        return (
+            <View style={styles.screen}>
+                <StatusBar style='auto' />
+                <ActivityIndicator size='large' color={colors.PRIMARY_COLOR} />
             </View>
         );
     }
