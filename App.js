@@ -9,8 +9,7 @@ import WeatherInfo from './components/WeatherInfo';
 import RefreshIcon from './components/RefreshIcon';
 import WeatherDetails from './components/WeatherDetails';
 
-import { WEATHER_API_KEY } from 'react-native-dotenv';
-
+const WEATHER_API_KEY = '02026f5ad728cd8e47d74c0f9518d4f9';
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?';
 
 export default function App() {
@@ -26,7 +25,7 @@ export default function App() {
         setCurrentWeather(null);
         setErrorMessage(null);
         try {
-            /** ===== This url for test in Android device ===== **/
+            /** ===== This url for run on Android simulator device ===== **/
             // const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=30.0778&lon=31.2852&units=${unitSystem}&appid=02026f5ad728cd8e47d74c0f9518d4f9`;
 
             let { status } = await Location.requestPermissionsAsync();
